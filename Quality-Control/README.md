@@ -135,7 +135,7 @@ The script generates several intermediate files and graphs of the QC process. Th
 - Do a final removal of samples and variants with high missigness.
 - *Samples and variants with missingness over the desired threshold will be removed*
 
-All of these steps are extensively described in [redlat_qc.rmd](redlat_qc.rmd) 
+All of these steps are extensively described in [quality_control.rmd](quality_control.rmd) 
 
 ![alt text](QC.png)
 
