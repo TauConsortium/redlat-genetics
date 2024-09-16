@@ -2,7 +2,7 @@
 #### Developed by Juliana Acosta-Uribe for the ReD-Lat Consortium 2024
 
 ## Description
-This is a pipeline designed to perform Quality Control of genomica data, either from Genome, Exome or SNP Arrays.
+This is a pipeline designed to perform Quality Control of genomica data, either from Genome, Exome or SNP Arrays.\
 It also allows to start either with a vcf.gz file or a plink fileset. 
 
 ## Requirements
