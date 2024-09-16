@@ -19,11 +19,11 @@ If you are working with Exome or Genome data, you will also need:\
 Ensure that all required software is installed on your system. Specify the path to each of the required software in the rmd 
 
 ## Usage
-The [redlat_qc.rmd](redlat_qc.rmd) pipeline is designed to be run as an [R markdown](https://rmarkdown.rstudio.com/lesson-1.html) file in [RStudio](https://posit.co/download/rstudio-desktop/). This way you can run it in a step-by-step mode and generate a rendered quality control report. 
+The [quality_control.rmd](quality_control.rmd) pipeline is designed to be run as an [R markdown](https://rmarkdown.rstudio.com/lesson-1.html) file in [RStudio](https://posit.co/download/rstudio-desktop/). This way you can run it in a step-by-step mode and generate a rendered quality control report. 
 
-Download the [redlat_qc.rmd](redlat_qc.rmd) file to your local [RStudio](https://posit.co/download/rstudio-desktop/) and modify steps *1. Set up your environment* and *2. Customize the quality control process* to fit your quality control goals. The rest of the code does not require modifications. (More information below)
+Download `quality_control.rmd` to your local RStudio and modify steps *1. Set up your environment* and *2. Customize the quality control process* to fit your quality control goals. The rest of the code does not require modifications. (More information below)
 
-You could also edit [redlat_qc.rmd](redlat_qc.rmd) and run it directly from the r command line if you already have the `sample_data.txt` and the `problematic_relatedness.txt` files in your workspace. 
+You could also edit `quality_control.rmd` and run it directly from the r command line if you already have the `sample_data.txt` and the `problematic_relatedness.txt` files in your workspace. 
 
 ```r
 library(rmarkdown) 
@@ -33,7 +33,6 @@ render("path/to/your/file.Rmd")
 ## Arguments
 - <genome_vcf>.vcf.gz - bgzipped genome or Exome VCF file, or 
 - <genome_plink>.bed/<genome_plink>.fam/<genome_plink>.bim - Plink formatted dataset
-
 
 If you are starting with a *<genome_vcf>.vcf*, or your *<genome_plink>.fam* does not have the sex/family of the samples already specified please provide an additional file `sample_data.txt` that includes all the individuals in your data and has the following header:
 
@@ -65,7 +64,7 @@ sed -i 's/ /\t/g'  sample_data.txt`
 The script generates several intermediate files and graphs of the QC process. The final output is a quality controled dataset which is determined based on specific criteria defined in the R script.
 
 ## Script Components
-- vcf_concordance_analysis.sh: The main script that runs the workflow.
+- quality_control.rmd: The main script that runs the workflow.
 - data_preprocessing.sh: A script to rename samples, recode variants according to the reference genome, assign IDs to all variable in bim file and normalize INDELs. (requires plink2 in addition to previous software)
 
 
