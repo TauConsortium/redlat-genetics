@@ -27,7 +27,7 @@ You could also edit `quality_control.rmd` and run it directly from the r command
 
 ```r
 library(rmarkdown) 
-render("path/to/`quality_control.Rmd")
+render("path/to/quality_control.Rmd")
 ```
 
 ## Arguments
