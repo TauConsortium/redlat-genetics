@@ -23,6 +23,8 @@ The scripts and pipelines are organizaed according to the workflow presented in 
     
     b. Global Ancestry
 
+    c. [Local Ancestry](/phasing_ancestry.sh) 
+
 
 **Collaborators**
 
