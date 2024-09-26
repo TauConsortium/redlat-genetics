@@ -16,16 +16,16 @@
 # 1.  File you want to phase (must be a file.bcf)
 # You can convert vcf --> bcf using bcftools:
 # `bcftools convert --output-type b file.vcf > file.bcf`
-query_file='joint_redlat_1-22-24.qc.snp.me.chr17' # Basename (prefix) for input .bcf files
+query_file='example.chr17' # Basename (prefix) for input .bcf files
 
 # 2. Fasta file of reference genome. Must have an index (.fai) in same directory 
 # fasta file was downloaded from https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/latest/
 # The index file fasta.fai was created using http://www.htslib.org/doc/samtools-faidx.html
-fasta_file='/home/acostauribe/public_html/Utilities/hg38.fa.gz'
+fasta_file='hg38.fa.gz'
 
 # 3. Genetic map
 # Three columns: bp, Chromosome, cM
-g_map=chr17.b38.gmap.gz 
+g_map='chr17.b38.gmap.gz'
 # if you do not provide this file, 
 
 # 4. Reference panel for Ancestry determination
@@ -44,12 +44,12 @@ ancestry_sample_map='afr-eur-eas-nat.sample-map.txt'
 ## OPTIONAL FILES;
 # 1. Reference Panel for phasing
 # File should be phased data. Can be a .vcf.gz or .bcf. Must have an index (.tbi or .csi) in same directory 
-reference_phasing='/home/acostauribe/Utilities/Reference_Population_databases/1000GP_Phase3_hg38/Phased/CCDG_14151_B01_GRM_WGS_2020-08-05_chr17.filtered.shapeit2-duohmm-phased.vcf.gz' 
+reference_phasing='CCDG_14151_B01_GRM_WGS_2020-08-05_chr17.filtered.shapeit2-duohmm-phased.vcf.gz' 
 # If you don't want to use a reference for phasing, delete `--reference ${reference_phasing}` from the phase_common command 
 
 # 3. Pedigree file
 # This file contains one line per sample having parent(s) in the dataset and three columns (kidID fatherID and motherID), separated by TABs for spaces.Use NAs for unknown parents (in the case of duos). In output file, the first offspring haplotype is transmitted by the father, the second by the mother.
-pedigree_file='joint_redlat_1-22-24.ped'
+pedigree_file='example.ped'
 # If the family relationships are specified in a plink style family.fam. you can generate a pedigree_file using awk
 # awk '{ if ($3 == 0) $3 = "NA"; if ($4 == 0) $4 = "NA"; print $2, $3, $4}' file.fam > pedigree_file
 # If you don't want to use a pedigree for phasing, delete `--pedigree ${pedigree_file}` from the phase_common command 
