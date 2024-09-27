@@ -75,7 +75,7 @@ bcftools +fill-tags ${query_file}.bcf --output-type b --output ${query_file}.AC.
 query_file=${query_file}'.AC'
 
 ## Index your file
-index ${query_file}.bcf
+bcftools index ${query_file}.bcf
 
 
 ## 2. PHASE YOUR FILES WITH SHAPEIT5
