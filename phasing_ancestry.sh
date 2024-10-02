@@ -104,6 +104,7 @@ zcat ${g_map} | awk  '{print $2, $1, $3}' > ${g_map}.rfmix2
 
 # 1.5 Extract a Reference panel for Ancestry determination from your Reference panel for Pahsing
 bcftools view --samples-file afr-eur-eas-nat.samples.txt  --threads ${threads} --output-type b ${reference_phasing} > 1KGP.afr-eur-eas-nat.samples_chr17.bcf
+bcftools index KGP.afr-eur-eas-nat.samples_chr17.bcf
 
 # 2. Run RFMix2
 rfmix 
@@ -118,3 +119,9 @@ rfmix
 --reanalyze-reference #In EM, analyze local ancestry of the reference panel and reclassify it
 --random-seed=clock 
 --n-threads=${threads}
+
+# RFMix2 will generate the following output files:
+# *output.msp.tsv*: The most likely assignment of subpopulations per CRF point. Produced by computing the viterbi algorithm on the CRF. The *.msp.tsv* file is condensed such that CRF windows are combined if all query samples are in the sample subpopulations for successive windows. 
+# *output.fb.tsv*: The marginal probabilities of each subpopulation being the ancestral population of the corresponding CRF point. Produced by computing the forward-backward algorithm on the CRF
+# *output.sis.tsv*
+# *output.Q*: RFMix2 also reports global ancestry estimated based on local ancestries identified by their algorithm in their standard output file (∗results.rfmix.Q) corresponding to the .Q output files from ADMIXTURE that can be compared to ADMIXTURE generated global ancestry directly. 
