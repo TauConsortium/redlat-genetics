@@ -55,16 +55,15 @@ pedigree_file='example.ped'
 # If you don't want to use a pedigree for phasing, delete `--pedigree ${pedigree_file}` from the phase_common command 
 ## VARIABLES
 chromosome='chr17' # Cromosome that is being processed
-threads='24' # 
-
+threads='24' 
 
 ## 1. PREPARE YOUR FILES
 
 ## Align to reference and normalize
 # Chromosomes must be encoded as chr#. 
 # If you need to change chromosome designation from # to chr# you need to create a file (e.g. chromosomes.txt) where every line has two columns: 'old name' 'new name' (e.g. 1 chr1)
-bcftools annotate --rename-chrs chr_17.txt --output-type b ${query_file}.bcf > ${query_file}.chr_id.bcf
-query_file=${query_file}'.chr_id'
+#bcftools annotate --rename-chrs chr14.txt --output-type b ${query_file}.bcf > ${query_file}.chr_id.bcf
+#query_file=${query_file}'.chr_id'
 
 bcftools norm --check-ref x --fasta-ref ${fasta_file} --threads ${threads} --output-type b ${query_file}.bcf > ${query_file}.ref.bcf
 # --check-ref warn (w), exclude (x), or set/fix (s)
@@ -100,24 +99,43 @@ phase_common \
 
 # 1. Recode the genetic map according to RFMix2 recommendations:
 # The first 3 columns are intepreted as chromosome, physical position in bp, genetic position in cM.
-zcat ${g_map} | awk  '{print $2, $1, $3}' > ${g_map}.rfmix2
+#zcat ${g_map} | awk  '{print $2, $1, $3}' > ${g_map}.rfmix2
 
-# 1.5 Extract a Reference panel for Ancestry determination from your Reference panel for Pahsing
-bcftools view --samples-file afr-eur-eas-nat.samples.txt  --threads ${threads} --output-type b ${reference_phasing} > 1KGP.afr-eur-eas-nat.samples_chr17.bcf
-bcftools index KGP.afr-eur-eas-nat.samples_chr17.bcf
+# 1.5 Extract a Reference panel for Ancestry determination from your Reference panel for Phasing
+#bcftools view --samples-file afr-eur-eas-nat.samples.txt  --threads ${threads} --output-type b ${reference_phasing} > 1KGP.afr-eur-eas-nat.samples_chr14.bcf
+#bcftools index 1KGP.afr-eur-eas-nat.samples_chr14.bcf
+
 
 # 2. Run RFMix2
-rfmix 
--f ${query_file}.phased.bcf  #BCF/VCF file with samples to analyze
--r ${reference_ancestry} #BCF/VCF file with reference individuals
--m ${ancestry_sample_map} #Reference panel sample population classification map
--g ${g_map}.rfmix2 #Genetic map file 
--o ${query_file}.phased.rfmix2 #Basename (prefix) for output files 
---chromosome=${chromosome} #Execute only on specified chromosome   
--n 5 #Terminal node size for random forest trees
--e 1 #Maximum number of EM iterations
---reanalyze-reference #In EM, analyze local ancestry of the reference panel and reclassify it
---random-seed=clock 
+
+# rfmix 
+# -f BCF/VCF file with samples to analyze.
+# -r BCF/VCF file with reference individuals
+# -m ${ancestry_sample_map} #Reference panel sample population classification map
+# -g ${g_map}.rfmix2 #Genetic map file 
+# -o ${query_file}.phased.rfmix2 #Basename (prefix) for output files 
+# --chromosome=${chromosome} #Execute only on specified chromosome   
+# -n 5 #Terminal node size for random forest trees recommended value
+# -e 5 #Maximum number of EM iterations recommended value
+# --reanalyze-reference #In EM, analyze local ancestry of the reference panel and reclassify it. Recommended flag
+# --random-seed=clock 
+# --n-threads=${threads}
+
+# Make sure your ${query_file}.phased.bcf is indexed
+bcftools index ${query_file}.phased.bcf
+
+# Run Rfmix2
+rfmix \
+-f ${query_file}.phased.bcf \
+-r ${reference_ancestry} \
+-m ${ancestry_sample_map} \
+-g ${g_map}.rfmix2 \
+-o ${query_file}.phased.rfmix2 \
+--chromosome=${chromosome} \
+-n 5 \
+-e 5 \
+--reanalyze-reference \
+--random-seed=clock \
 --n-threads=${threads}
 
 # RFMix2 will generate the following output files:
