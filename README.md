@@ -29,4 +29,5 @@ The scripts and pipelines are organizaed according to the workflow presented in 
 **Collaborators**
 
 Juliana Acosta-Uribe `acostauribe[at]ucsb.edu`
+
 Jared Taylor `jtaylor[at]hudsonalpha.org`
